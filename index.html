@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TSV Flashcards</title>
+    <link rel="stylesheet" href="static/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Flashcards 生成器</h1>
+      <p>上传 TSV 文件或手动添加条目，浏览器会自动保存结果。</p>
+    </header>
+    <main>
+      <section class="panel">
+        <h2>上传 TSV 文件</h2>
+        <p class="hint">文件需为两列，第一列「表达」，第二列「解释」，首行表头会自动忽略。</p>
+        <label class="file-input">
+          <input type="file" id="tsv-input" accept=".tsv,text/tab-separated-values" />
+          <span>选择 TSV 文件</span>
+        </label>
+      </section>
+
+      <section class="panel">
+        <h2>手动新增卡片</h2>
+        <form id="manual-form">
+          <div class="field">
+            <label for="expression">表达</label>
+            <input id="expression" name="expression" type="text" required />
+          </div>
+          <div class="field">
+            <label for="explanation">解释</label>
+            <textarea id="explanation" name="explanation" rows="3" required></textarea>
+          </div>
+          <button type="submit">新增</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>当前卡片</h2>
+          <div class="panel-actions">
+            <button id="export-button" type="button">导出 TSV</button>
+            <button id="clear-button" type="button" class="danger">清空全部</button>
+          </div>
+        </div>
+        <p id="empty-state" class="empty">暂无内容，请上传文件或手动添加。</p>
+        <div id="cards" class="flashcards" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="static/app.js"></script>
+  </body>
+</html>
