@@ -49,11 +49,6 @@ function render() {
     const cardElement = document.createElement("article");
     cardElement.className = "card";
 
-    const title = document.createElement("h3");
-    title.textContent = card.expression;
-
-    const content = document.createElement("p");
-    content.textContent = card.explanation;
 
     const actions = document.createElement("div");
     actions.className = "card-actions";
@@ -62,12 +57,7 @@ function render() {
     deleteButton.type = "button";
     deleteButton.className = "secondary";
     deleteButton.textContent = "删除";
-    deleteButton.addEventListener("click", () => removeCard(card.id));
 
-    actions.appendChild(deleteButton);
-
-    cardElement.appendChild(title);
-    cardElement.appendChild(content);
     cardElement.appendChild(actions);
 
     cardsContainer.appendChild(cardElement);
