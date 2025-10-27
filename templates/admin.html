@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section class="admin-actions">
+    <a href="{{ url_for('index') }}">返回首页</a>
+    <a href="{{ url_for('logout') }}">退出登录</a>
+  </section>
+
+  <section>
+    <h2>上传 TSV 批量导入</h2>
+    <form action="{{ url_for('upload_cards') }}" method="post" enctype="multipart/form-data">
+      <input type="file" name="tsv_file" accept=".tsv,text/tab-separated-values" required>
+      <input type="submit" value="上传并导入">
+    </form>
+    <p>注意：系统会自动忽略第一行表头，并将表达与解释写入数据库。</p>
+  </section>
+
+  <section>
+    <h2>手动添加卡片</h2>
+    <form action="{{ url_for('add_card') }}" method="post">
+      <label for="expression">表达</label>
+      <input type="text" id="expression" name="expression" required>
+
+      <label for="explanation">解释</label>
+      <textarea id="explanation" name="explanation" rows="3" required></textarea>
+
+      <input type="submit" value="添加卡片">
+    </form>
+  </section>
+
+  <section>
+    <h2>所有卡片（共 {{ cards|length }} 条）</h2>
+    {% if cards %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>表达</th>
+            <th>解释</th>
+            <th>创建时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for card in cards %}
+            <tr>
+              <td>{{ card.id }}</td>
+              <td>{{ card.expression }}</td>
+              <td>{{ card.explanation }}</td>
+              <td>{{ card.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+              <td>
+                <form class="delete-form" action="{{ url_for('delete_card', card_id=card.id) }}" method="post">
+                  <input type="submit" value="删除" onclick="return confirm('确定删除该卡片吗？');">
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>暂无卡片。</p>
+    {% endif %}
+  </section>
+{% endblock %}
