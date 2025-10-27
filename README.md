@@ -63,14 +63,3 @@ book	书籍，用于阅读
 - 考虑将应用部署在支持 WSGI 的服务器上，如 gunicorn + nginx。
 - 如需多用户协作，可进一步扩展用户体系与权限管理。
 
-### Vercel 部署
-
-项目已经包含 `vercel.json` 配置，可直接使用 [Vercel Python Runtime](https://vercel.com/docs/functions/runtimes/python) 部署。关键步骤如下：
-
-1. 为项目启用持久化数据库。Vercel 的函数执行环境不支持在本地文件系统中长期保存 SQLite 文件，因此请准备一个可远程访问的数据库（如 Vercel Postgres、Neon、Railway 等），并获取其连接字符串。
-2. 在 Vercel 控制台的 **Environment Variables** 中配置：
-   - `DATABASE_URL`：数据库连接字符串，例如 `postgresql://USER:PASSWORD@HOST:PORT/DBNAME`。如果你的服务提供的是 `postgres://...` 前缀，应用会自动转换为 SQLAlchemy 可识别的 `postgresql://`。
-   - `ADMIN_USERNAME`、`ADMIN_PASSWORD`、`SECRET_KEY` 等保密信息。
-3. 执行 `vercel` 或在 Vercel 控制台导入仓库后进行部署。`vercel.json` 会把所有请求路由到 `app.py`，从而运行 Flask 应用。
-
-部署完成后，应用会在启动时自动创建缺失的数据库表。若遇到连接问题，请确认数据库支持通过公网访问，并已允许来自 Vercel 的连接。
