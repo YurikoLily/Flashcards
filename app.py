@@ -15,10 +15,7 @@ from flask import (
 from flask_sqlalchemy import SQLAlchemy
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-DATABASE_PATH = os.path.join(BASE_DIR, "flashcards.db")
 
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DATABASE_PATH}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "change-me")
 app.config["ADMIN_USERNAME"] = os.getenv("ADMIN_USERNAME", "admin")
