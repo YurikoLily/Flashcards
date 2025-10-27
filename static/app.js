@@ -48,47 +48,7 @@ function render() {
   cards.forEach((card) => {
     const cardElement = document.createElement("article");
     cardElement.className = "card";
-    cardElement.tabIndex = 0;
-    cardElement.setAttribute("role", "button");
-    cardElement.setAttribute(
-      "aria-label",
-      `${card.expression}，点击或按回车翻转查看解释`
-    );
-    cardElement.setAttribute("aria-pressed", "false");
 
-    const cardInner = document.createElement("div");
-    cardInner.className = "card-inner";
-
-    const front = document.createElement("div");
-    front.className = "card-face card-front";
-
-    const frontExpression = document.createElement("h3");
-    frontExpression.className = "card-expression";
-    frontExpression.textContent = card.expression;
-
-    const frontHint = document.createElement("p");
-    frontHint.className = "card-hint";
-    frontHint.textContent = "点击或按回车翻转";
-
-    front.appendChild(frontExpression);
-    front.appendChild(frontHint);
-
-    const back = document.createElement("div");
-    back.className = "card-face card-back";
-
-    const backLabel = document.createElement("span");
-    backLabel.className = "card-label";
-    backLabel.textContent = "解释";
-
-    const backExplanation = document.createElement("p");
-    backExplanation.className = "card-explanation";
-    backExplanation.textContent = card.explanation;
-
-    back.appendChild(backLabel);
-    back.appendChild(backExplanation);
-
-    cardInner.appendChild(front);
-    cardInner.appendChild(back);
 
     const actions = document.createElement("div");
     actions.className = "card-actions";
@@ -97,36 +57,7 @@ function render() {
     deleteButton.type = "button";
     deleteButton.className = "secondary";
     deleteButton.textContent = "删除";
-    deleteButton.addEventListener("click", (event) => {
-      event.stopPropagation();
-      removeCard(card.id);
-    });
 
-    actions.appendChild(deleteButton);
-
-    const toggleFlip = () => {
-      const isFlipped = cardElement.classList.toggle("flipped");
-      cardElement.setAttribute("aria-pressed", isFlipped ? "true" : "false");
-    };
-
-    cardElement.addEventListener("click", (event) => {
-      if (event.target.closest(".card-actions")) {
-        return;
-      }
-      toggleFlip();
-    });
-
-    cardElement.addEventListener("keydown", (event) => {
-      if (event.target.closest(".card-actions")) {
-        return;
-      }
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        toggleFlip();
-      }
-    });
-
-    cardElement.appendChild(cardInner);
     cardElement.appendChild(actions);
 
     cardsContainer.appendChild(cardElement);

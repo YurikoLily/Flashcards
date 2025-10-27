@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section>
+    <h2>所有学习卡片</h2>
+    {% if cards %}
+      <div class="flashcards">
+        {% for card in cards %}
+          <article class="card">
+            <h3>{{ card.expression }}</h3>
+            <p>{{ card.explanation }}</p>
+            <small>创建时间：{{ card.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>暂无卡片，登录管理端开始导入吧。</p>
+    {% endif %}
+  </section>
+  <section class="admin-actions">
+    {% if is_admin %}
+      <a href="{{ url_for('admin') }}">进入管理端</a>
+      <a href="{{ url_for('logout') }}">退出登录</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">管理员登录</a>
+    {% endif %}
+  </section>
+{% endblock %}
